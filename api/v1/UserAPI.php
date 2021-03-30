@@ -82,11 +82,10 @@ class UserAPI {
                         if($res->status){
                             $mail = new \mail\PHPMailer();
                             $mail->isSMTP();
-                            $mail->Mailer = "smtp";
-                            $mail->SMTPDebug  = 1;  
-                            $mail->SMTPAuth   = TRUE;
-                            $mail->SMTPSecure = "STARTTLS";
-                            $mail->Port       = 587;
+                            $mail->SMTPDebug  = 2;  
+                            $mail->SMTPAuth   = true;
+                            $mail->SMTPSecure = "ssl";
+                            $mail->Port       = 465;
                             $mail->Host       = "smtp.gmail.com";
                             $mail->Username   = "nguyenhuuluan17@gmail.com";
                             $mail->Password   = "hailuataday";
