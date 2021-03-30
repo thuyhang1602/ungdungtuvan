@@ -98,7 +98,7 @@ class UserAPI {
                                 <body>
                                     <center>
                                         <p>
-                                        <a href="http://localhost/verify/' . $email . '" 
+                                        <a href="https://ungdungtuvan.herokuapp.com/' . $email . '" 
                                         style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
                                         target="_blank">Veirfy email</a>
                                         </p>
