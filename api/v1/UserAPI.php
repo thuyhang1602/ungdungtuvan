@@ -82,13 +82,13 @@ class UserAPI {
                         if($res->status){
                             $mail = new \mail\PHPMailer();
                             $mail->isSMTP();
-                            $mail->SMTPDebug  = 2;  
+                            $mail->SMTPDebug  = 1;  
                             $mail->SMTPAuth   = true;
                             $mail->SMTPSecure = "ssl";
                             $mail->Port       = 465;
                             $mail->Host       = "smtp.gmail.com";
-                            $mail->Username   = "nguyenhuuluan17@gmail.com";
-                            $mail->Password   = "hailuataday";
+                            $mail->Username   = "ungdungtuvan@gmail.com";
+                            $mail->Password   = "Thuyhang@99";
                             $mail ->CharSet = "UTF-8"; 
                             $mail->isHTML(true);
                             $mail->addAddress($email);
@@ -98,7 +98,7 @@ class UserAPI {
                                 <body>
                                     <center>
                                         <p>
-                                        <a href="https://ungdungtuvan.herokuapp.com/' . $email . '" 
+                                        <a href="http://localhost/' . $email . '" 
                                         style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
                                         target="_blank">Veirfy email</a>
                                         </p>
@@ -442,7 +442,7 @@ class UserAPI {
             return $conn_resp;
         }
         $conn = $conn_resp->message;
-        $delete_comment_query = sprintf("DELETE FROM `comments` WHERE id = '%s'",$id);
+        $delete_comment_query = sprintf("DELETE FROM `comments` WHERE post_id = '%s'",$id);
         Mysqllib::mysql_post_data_from_query($conn, $delete_comment_query);
         $delete_query = sprintf("DELETE FROM `posts` WHERE id = '%s'",$id);
         Mysqllib::mysql_post_data_from_query($conn, $delete_query);

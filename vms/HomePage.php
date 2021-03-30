@@ -6,10 +6,6 @@ use api\v1\UserAPI;
 class HomePage {
     public function __construct($params = null) {
         session_start();
-        if(isset($_SESSION['unique_id'])){
-            session_unset();
-            session_destroy();
-        }
         $this->title  = "Đăng nhập";
     }
 
@@ -40,7 +36,6 @@ class HomePage {
         <?= isset($_SESSION['logout']) ? $_SESSION['logout']:"" ?>
         <?php 
             unset($_SESSION['logout']);
-            unset($_SESSION['error']);
         ?>
         <div class="field input">
           <label>Email</label>

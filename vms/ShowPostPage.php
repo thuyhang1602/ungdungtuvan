@@ -39,13 +39,12 @@ class ShowPostPage {
                             <h2><?= $row['title'] ?></h2>
                             <div><strong>Đăng bởi:</strong> <?= $row['firstname']." ".$row['lastname'] ?></div>
                             <p><strong>Nội dung:</strong> <?= $row['description'] ?></p>
-                            <div class="comments <?= $row['id'] ?>"></div>
+                            <div class="comments" id="comments-<?= $row['id'] ?>"></div>
                             <form action="#" class="comment-box">
                                 <input type="hidden" name="comment_id" id="comment_id" value="0" />
-                                <input type="hidden" class="post-id" name="post-id" post-id="<?= $row['id'] ?>" />
                                 <input type="hidden" class="user_id" name="user_id" value="<?= $_SESSION['unique_id'] ?>"/>
-                                <input type="text" name="input-comment" placeholder="Viết bình luận" class="input-comment" autocomplete="off"/>
-                                <button type="button" class="comment-button">Bình luận</button>
+                                <input type="text" name="input-comment" id="input-comment-<?= $row['id'] ?>" placeholder="Viết bình luận" class="input-comment" autocomplete="off"/>
+                                <button type="button" class="comment-button" data-attr="<?= $row['id'] ?>">Bình luận</button>
                             </form>
                         </div>
                     </div>
