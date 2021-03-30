@@ -1,0 +1,61 @@
+.require{
+    color:red;
+}
+.container > .row{
+    background-color:white;
+}
+
+.back-icon{
+    color: #333;
+    font-size: 18px;
+}
+.post{
+    margin:2rem 0;
+}
+.comment-box{
+    margin:1rem 0;
+    position: relative;
+}
+.massaction{
+    float: right;
+}
+.massaction > a{
+    color: black;
+}
+.comment-button{
+    outline: none;
+    border: 1px solid black;
+    background-color: black;
+    color: white;
+    padding:0.2rem;
+    position: absolute;
+    right:14%;
+}
+.input-comment{
+    padding:0.18rem;
+    outline: none;
+    width:70%;
+    border-radius:0.2rem;
+    border:1px solid rgb(185, 185, 185);
+}
+.post-container{
+    background: #fff;
+    max-width: 450px;
+    width: 100%;
+    border-radius: 16px;
+    box-shadow: 0 0 128px 0 rgba(0,0,0,0.1),
+                0 32px 64px -48px rgba(0,0,0,0.5);
+    padding:1rem 0.5rem;
+    margin:2rem auto;
+}
+.comments{
+    position: relative;
+    min-height: 200px;
+    max-height: 200px;
+    overflow-y: auto;
+    padding: 10px 30px 20px 30px;
+    background: #f7f7f7;
+    box-shadow: inset 0 32px 32px -32px rgb(0 0 0 / 5%),
+                inset 0 -32px 32px -32px rgb(0 0 0 / 5%);
+    box-sizing: border-box !important;
+}
