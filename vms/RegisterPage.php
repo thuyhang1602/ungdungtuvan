@@ -85,7 +85,7 @@ class RegisterPage
         </div>
         <div class="field input">
           <label for="school_year">Sinh viên năm</label>
-          <input type="number" name="school_year" id="school_year" min="1" max="9" placeholder="Bạn là sinh viên năm mấy ?" required>
+          <input type="number" name="school_year" id="school_year" min="1" max="9" placeholder="Bạn là sinh viên năm mấy ?">
         </div>
         <div class="field input">
           <label for="major">Chuyên ngành</label>
