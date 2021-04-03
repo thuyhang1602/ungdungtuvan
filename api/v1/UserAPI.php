@@ -44,6 +44,7 @@ class UserAPI {
         $school = $conn->real_escape_string($user->school);
         $sex = $conn->real_escape_string($user->sex);
         $isVerify = "unverify";
+        $school_year =  $conn->real_escape_string($user->school_year);
         $baseUrl = substr(dirname(__FILE__),0,strpos(dirname(__FILE__),'api'));
         if(isset($user->image)){
             $fileImg = $user->image;
@@ -64,7 +65,7 @@ class UserAPI {
                         $ran_id = rand(time(), 100000000);
                         $status = "Active now";
                         // Query
-                        $insert_query = sprintf("INSERT INTO `users`(`unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`, `auth`) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
+                        $insert_query = sprintf("INSERT INTO `users`(`unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`, `auth`, `school_year`) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
                             $ran_id,
                             $firstname,
                             $lastname,
@@ -76,20 +77,20 @@ class UserAPI {
                             $major,
                             $school,
                             $sex,
-                            $isVerify
+                            $isVerify,
+                            $school_year
                         );
                         $res = Mysqllib::mysql_post_data_from_query($conn, $insert_query);
                         if($res->status){
                             $mail = new \mail\PHPMailer();
                             $mail->isSMTP();
-                            $mail->Mailer = "smtp";
                             $mail->SMTPDebug  = 1;  
-                            $mail->SMTPAuth   = TRUE;
-                            $mail->SMTPSecure = "STARTTLS";
-                            $mail->Port       = 587;
+                            $mail->SMTPAuth   = true;
+                            $mail->SMTPSecure = "ssl";
+                            $mail->Port       = 465;
                             $mail->Host       = "smtp.gmail.com";
-                            $mail->Username   = "nguyenhuuluan17@gmail.com";
-                            $mail->Password   = "hailuataday";
+                            $mail->Username   = "ungdungtuvan@gmail.com";
+                            $mail->Password   = "Thuyhang@99";
                             $mail ->CharSet = "UTF-8"; 
                             $mail->isHTML(true);
                             $mail->addAddress($email);
@@ -181,7 +182,7 @@ class UserAPI {
         }
         $conn = $conn_resp->message;
         $query = sprintf(
-            "SELECT * FROM users WHERE NOT unique_id='%s' AND (firstname LIKE '%s' OR lastname LIKE '%s')", 
+            "SELECT * FROM users WHERE NOT unique_id='%s' AND (firstname LIKE '%s' OR lastname LIKE '%s') LIMIT 5", 
             $conn->real_escape_string($id), 
             '%'.$conn->real_escape_string($key).'%',
             '%'.$conn->real_escape_string($key).'%'
@@ -202,7 +203,7 @@ class UserAPI {
             $query = sprintf(
                 "SELECT * FROM messages WHERE (incoming_msg_id = '%s'
                 OR outgoing_msg_id = '%s') AND (outgoing_msg_id = '%s' 
-                OR incoming_msg_id = '%s') ORDER BY msg_id DESC LIMIT 1", 
+                OR incoming_msg_id = '%s') ORDER BY msg_id DESC", 
                 $conn->real_escape_string($row['unique_id']), 
                 $conn->real_escape_string($row['unique_id']),
                 $conn->real_escape_string($outgoing_id),
@@ -217,7 +218,6 @@ class UserAPI {
                 $you = "";
             }
             ($row['status'] == "Offline now") ? $offline = "offline" : $offline = "";
-            ($outgoing_id == $row['unique_id']) ? $hid_me = "hide" : $hid_me = "";
              $output .= '<a href="/chat/'. $row['unique_id'] .'">
                     <div class="content">
                     <img src="../../images/'. $row['img'] .'" alt="">
@@ -309,8 +309,6 @@ class UserAPI {
         $conn = $conn_resp->message;
         $firstname = $conn->real_escape_string($user->firstname);
         $lastname = $conn->real_escape_string($user->lastname);
-        $position = $conn->real_escape_string($user->position);
-        $email = $conn->real_escape_string($user->email);
         $major = $conn->real_escape_string($user->major);
         $school = $conn->real_escape_string($user->school);
         $sex = $conn->real_escape_string($user->sex);
@@ -333,11 +331,9 @@ class UserAPI {
                     $new_img_name = $time.$img_name;
                     if(move_uploaded_file($tmp_name,str_replace('\\', '/', $baseUrl)."/images/".$new_img_name)){
                         // Query
-                        $update_query = sprintf("UPDATE `users` SET `firstname`='%s',`lastname`='%s',`position`='%s',`email`='%s',`img`='%s',`major`='%s',`school`='%s',`sex`='%s' WHERE `unique_id` = '%s'", 
+                        $update_query = sprintf("UPDATE `users` SET `firstname`='%s',`lastname`='%s',`img`='%s',`major`='%s',`school`='%s',`sex`='%s' WHERE `unique_id` = '%s'", 
                             $firstname,
                             $lastname,
-                            $position,
-                            $email,
                             $new_img_name,
                             $major,
                             $school,
@@ -443,7 +439,7 @@ class UserAPI {
             return $conn_resp;
         }
         $conn = $conn_resp->message;
-        $delete_comment_query = sprintf("DELETE FROM `comments` WHERE id = '%s'",$id);
+        $delete_comment_query = sprintf("DELETE FROM `comments` WHERE post_id = '%s'",$id);
         Mysqllib::mysql_post_data_from_query($conn, $delete_comment_query);
         $delete_query = sprintf("DELETE FROM `posts` WHERE id = '%s'",$id);
         Mysqllib::mysql_post_data_from_query($conn, $delete_query);
@@ -519,5 +515,31 @@ class UserAPI {
         $delete_comment_query = sprintf("DELETE FROM `comments` WHERE id = '%s' AND user_id = '%s'",$id, $user_id);
         Mysqllib::mysql_post_data_from_query($conn, $delete_comment_query);
         header("Location: /showpost");
+    }
+
+    public static function getSubject1($id){
+        // Connect db
+        $conn_resp = Database::connect_db();
+        if(!$conn_resp->status) {
+            return $conn_resp;
+        }
+        $conn = $conn_resp->message;
+
+        $query = sprintf("SELECT * FROM score WHERE `user_id` = '%s' AND `semester` = 'HK1'",$conn->real_escape_string($id));
+        $res = Mysqllib::mysql_get_data_from_query($conn, $query);
+        return $res;
+    }
+    
+    public static function getSubject2($id){
+        // Connect db
+        $conn_resp = Database::connect_db();
+        if(!$conn_resp->status) {
+            return $conn_resp;
+        }
+        $conn = $conn_resp->message;
+
+        $query = sprintf("SELECT * FROM score WHERE `user_id` = '%s' AND `semester` = 'HK2'",$conn->real_escape_string($id));
+        $res = Mysqllib::mysql_get_data_from_query($conn, $query);
+        return $res;
     }
 }

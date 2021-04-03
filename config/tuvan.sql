@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Mar 30, 2021 at 05:16 AM
+-- Generation Time: Apr 03, 2021 at 02:18 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -35,17 +35,6 @@ CREATE TABLE `comments` (
   `parent_comment_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `comments`
---
-
-INSERT INTO `comments` (`id`, `content`, `user_id`, `post_id`, `parent_comment_id`) VALUES
-(31, 'hi', 458110817, 8, 0),
-(32, 'hello', 458110817, 8, 0),
-(33, 'Xin chào', 458110817, 8, 0),
-(34, 'Hi thầy', 811242942, 8, 0),
-(35, 'Thầy khỏe không ạ', 811242942, 8, 0);
-
 -- --------------------------------------------------------
 
 --
@@ -60,13 +49,6 @@ CREATE TABLE `messages` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `messages`
---
-
-INSERT INTO `messages` (`msg_id`, `incoming_msg_id`, `outgoing_msg_id`, `msg`, `created_at`, `updated_at`) VALUES
-(45, 458110817, 811242942, 'Hello', '2021-03-29 17:36:46', '2021-03-30 00:36:46');
 
 -- --------------------------------------------------------
 
@@ -88,7 +70,36 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`id`, `title`, `description`, `unique_id`, `created_at`, `updated_at`) VALUES
-(8, 'Thông báo nghỉ học', 'Mai nghỉ học', 458110817, '2021-03-29 13:31:42', '2021-03-29 23:34:27');
+(13, 'Thông báo', 'abc', 960922130, '2021-04-01 16:32:11', '2021-04-01 23:32:11'),
+(14, 'Thông báo 2', 'cde', 960922130, '2021-04-01 16:41:39', '2021-04-01 23:41:39');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `score`
+--
+
+CREATE TABLE `score` (
+  `id` int(11) NOT NULL,
+  `semester` varchar(3) DEFAULT NULL,
+  `subject_id` int(255) DEFAULT NULL,
+  `subject_name` varchar(255) DEFAULT NULL,
+  `credits` int(2) DEFAULT NULL,
+  `medium_score` int(5) DEFAULT NULL,
+  `user_id` int(255) DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Dumping data for table `score`
+--
+
+INSERT INTO `score` (`id`, `semester`, `subject_id`, `subject_name`, `credits`, `medium_score`, `user_id`) VALUES
+(1, 'HK1', 1, 'Tiếng Anh 2', 3, 8, 960922130),
+(2, 'HK1', 2, 'Hệ thống thông tin quản lý', 3, 10, 960922130),
+(3, 'HK1', 3, 'Quản lý nguồn cung cấp', 3, 7, 960922130),
+(4, 'HK2', 4, 'Nguyên lý quản trị doanh nghiệp', 4, 8, 960922130),
+(5, 'HK2', 5, 'Thương mại điện tử', 3, 6, 960922130),
+(6, 'HK2', 6, 'Phát triển ứng dụng', 2, 7, 960922130);
 
 -- --------------------------------------------------------
 
@@ -111,16 +122,18 @@ CREATE TABLE `users` (
   `sex` varchar(5) DEFAULT NULL,
   `auth` varchar(10) DEFAULT NULL,
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp()
+  `updated_at` datetime DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `school_year` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`user_id`, `unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`, `auth`, `created_at`, `updated_at`) VALUES
-(24, 458110817, 'Luân', 'Nguyễn', 'teacher', 'nguyenhuuluan17@gmail.com', '$2y$10$BsZNPL25zPDn/rACc3p77evtXUrx7qIt.tRH79YEQLtuhM4gbSGVq', '1617021048luan.jpg', 'Active now', 'ATT', 'KHTN', 'male', 'verify', '2021-03-29 08:51:59', '2021-03-29 21:51:57'),
-(25, 811242942, 'Quỳnh', 'Liêu', 'student', 'hyquynh123@gmail.com', '$2y$10$J4LIf8GDqQGITI1ltzJftOkmUZKbFG.ylOr1CRzstjNoACkjfU2O6', '1617020578quynh.jpg', 'Active now', 'CNTT', 'KHTN', 'male', 'verify', '2021-03-29 11:50:26', '2021-03-30 09:57:47');
+INSERT INTO `users` (`user_id`, `unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`, `auth`, `created_at`, `updated_at`, `school_year`) VALUES
+(29, 1108528159, 'Luân', 'Nguyễn', 'student', 'nguyenhuuluan17@gmail.com', '$2y$10$UbBD3ZD1aqGvDzip0xzGGuvOVOdbepql2awrE6XH3irw1DCuJdsHm', '1617295795luan.jpg', 'Offline now', 'CNTT', 'KHTN', 'male', 'verify', '2021-04-01 12:11:28', '2021-04-03 17:06:16', 3),
+(30, 960922130, 'Quỳnh', 'Liêu', 'student', 'hyquynh123@gmail.com', '$2y$10$FB4DJ7e1WX/lpuF2NJ4.8O2YrHVzcQCZtCChGb9fjo3N.UIc/Vc6K', '1617294544quynh.jpg', 'Active now', 'CNTT', 'KHTN', 'femal', 'verify', '2021-04-01 16:29:04', '2021-04-03 17:57:00', NULL),
+(31, 301642398, 'Hưng', 'Nguyễn', 'student', 'luannh@magenest.com', '$2y$10$vTKn.Pm9IFKYjnmuwYGBi.isC7yOyVzdYpL2weES9Z.1UPV18tyf6', '1617444934hang.jpg', 'Offline now', 'ATTT', 'KHTN', 'male', 'verify', '2021-04-03 10:15:34', '2021-04-03 17:33:38', 4);
 
 --
 -- Indexes for dumped tables
@@ -146,6 +159,12 @@ ALTER TABLE `posts`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indexes for table `score`
+--
+ALTER TABLE `score`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indexes for table `users`
 --
 ALTER TABLE `users`
@@ -159,7 +178,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=58;
 
 --
 -- AUTO_INCREMENT for table `messages`
@@ -171,13 +190,19 @@ ALTER TABLE `messages`
 -- AUTO_INCREMENT for table `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `score`
+--
+ALTER TABLE `score`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
 
 --
 -- Constraints for dumped tables

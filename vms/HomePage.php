@@ -6,10 +6,6 @@ use api\v1\UserAPI;
 class HomePage {
     public function __construct($params = null) {
         session_start();
-        if(isset($_SESSION['unique_id'])){
-            session_unset();
-            session_destroy();
-        }
         $this->title  = "Đăng nhập";
     }
 
@@ -24,6 +20,7 @@ class HomePage {
             if(UserAPI::login($email,$password,$data)->status){
                 header("Location: /conver");
             }else{
+                $_SESSION['error_login'] = "<div class='error-text'>Password/Email không hợp lệ <span class='close'>&times;</span></div>";
                 header("Location: /");
             }
         }
@@ -38,9 +35,9 @@ class HomePage {
       <header>Ứng dụng tư vấn sinh viên <i class="fas fa-comments"></i></header>
       <form action="/" method="POST" enctype="multipart/form-data" autocomplete="off">
         <?= isset($_SESSION['logout']) ? $_SESSION['logout']:"" ?>
+        <?= isset($_SESSION['error_login']) ? $_SESSION['error_login']:"" ?>
         <?php 
             unset($_SESSION['logout']);
-            unset($_SESSION['error']);
         ?>
         <div class="field input">
           <label>Email</label>

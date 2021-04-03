@@ -37,15 +37,14 @@ class ShowPostPage {
                         <?php endif; ?>
                         <div class="post">
                             <h2><?= $row['title'] ?></h2>
-                            <div><strong>Đăng bởi:</strong> <?= $row['firstname']." ".$row['lastname'] ?></div>
+                            <div><strong>Đăng bởi:</strong> <?= $row['firstname']." ".$row['lastname'] ?> <small><i>lúc <?= $row['created_at'] ?></i></small></div>
                             <p><strong>Nội dung:</strong> <?= $row['description'] ?></p>
-                            <div class="comments <?= $row['id'] ?>"></div>
+                            <div class="comments" id="comments-<?= $row['id'] ?>"></div>
                             <form action="#" class="comment-box">
                                 <input type="hidden" name="comment_id" id="comment_id" value="0" />
-                                <input type="hidden" class="post-id" name="post-id" post-id="<?= $row['id'] ?>" />
                                 <input type="hidden" class="user_id" name="user_id" value="<?= $_SESSION['unique_id'] ?>"/>
-                                <input type="text" name="input-comment" placeholder="Viết bình luận" class="input-comment" autocomplete="off"/>
-                                <button type="button" class="comment-button">Bình luận</button>
+                                <input type="text" name="input-comment" id="input-comment-<?= $row['id'] ?>" placeholder="Viết bình luận" class="input-comment" autocomplete="off"/>
+                                <button type="button" class="comment-button" data-attr="<?= $row['id'] ?>">Bình luận</button>
                             </form>
                         </div>
                     </div>
@@ -53,6 +52,10 @@ class ShowPostPage {
             <?php endif; ?>
         <?php endforeach; ?>
     <?php else: ?>
-        <div>Hiện tại chưa có bảng tin nào</div>
+        <div class="d-flex justify-content-center">
+            <div class="jumbotron">
+                <p>Hiện chưa có bảng tin nào từ giáo viên bộ môn, vui lòng quay lại sau.</p>
+            </div>
+        </div>
     <?php endif; ?>
 <?php }}

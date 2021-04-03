@@ -22,6 +22,7 @@ class UsersPage {
     // Đổi lại tên __render nếu dùng template cha
     public function __render() {
 ?>
+    <a href="/conver" class="return"><i class="fas fa-arrow-left"></i></a>
     <section class="users">
         <div class="users-list">
             <?php
@@ -34,6 +35,5 @@ class UsersPage {
                 }
             ?>
         </div>
-        <a href="/conver" style="color:black;"><i class="fas fa-arrow-left"></i></a>
     </section>
 <?php }}

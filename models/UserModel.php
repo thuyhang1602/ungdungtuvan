@@ -11,6 +11,7 @@ class UserModel {
     public $major;
     public $school;
     public $sex;
+    public $school_year;
 
     public function __construct($user,$file) {
         $this->firstname = $user["firstname"];
@@ -22,5 +23,10 @@ class UserModel {
         $this->major = $user['major'];
         $this->school = $user['school'];
         $this->sex = $user['sex'];
+        if(!empty($user['school_year'])){
+            $this->school_year = $user['school_year'];
+        }else{
+            $this->school_year = null;
+        }
     }
 }

@@ -42,6 +42,8 @@ class Router {
         $this->post('/insertcomment',"InsertCommentPage");
         $this->post('/getcomment',"GetCommentPage");
         $this->get('/deletecomment/{id}',"DeleteCommentPage");
+        $this->get('/showscore/{id}',"ShowScorePage");
+        $this->get('/searchpage',"SearchFormPage");
     }
     
     public function get(string $url, $action) {

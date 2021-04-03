@@ -50,6 +50,16 @@ $(document).ready(function(){
         }
     });
 
+    $("#position").on('change',function(){
+        if(this.value === 'student'){
+            $('label[for="school_year"]').css("display","block");
+            $("#school_year").css("display", "block");
+        }else{
+            $('label[for="school_year"]').css("display","none");
+            $("#school_year").css("display", "none");
+        }
+    });
+
     setInterval(function () {
         const chatbox = document.querySelector(".chat-box");
         var incoming_id = $(".incoming_id").val();

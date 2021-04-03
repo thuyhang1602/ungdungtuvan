@@ -10,14 +10,13 @@ class ResetPasswordPage
         if (isset($_POST['submit'])) {
             $mail = new \mail\PHPMailer();
             $mail->isSMTP();
-            $mail->Mailer = "smtp";
             $mail->SMTPDebug  = 1;  
             $mail->SMTPAuth   = TRUE;
-            $mail->SMTPSecure = "STARTTLS";
-            $mail->Port       = 587;
+            $mail->SMTPSecure = "ssl";
+            $mail->Port       = 465;
             $mail->Host       = "smtp.gmail.com";
-            $mail->Username   = "nguyenhuuluan17@gmail.com";
-            $mail->Password   = "hailuataday";
+            $mail->Username   = "ungdungtuvan@gmail.com";
+            $mail->Password   = "Thuyhang@99";
             $mail ->CharSet = "UTF-8"; 
             $mail->isHTML(true);
             $mail->addAddress($_POST['email']);
