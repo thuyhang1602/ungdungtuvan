@@ -37,7 +37,7 @@ class ShowPostPage {
                         <?php endif; ?>
                         <div class="post">
                             <h2><?= $row['title'] ?></h2>
-                            <div><strong>Đăng bởi:</strong> <?= $row['firstname']." ".$row['lastname'] ?></div>
+                            <div><strong>Đăng bởi:</strong> <?= $row['firstname']." ".$row['lastname'] ?> <small><i>lúc <?= $row['created_at'] ?></i></small></div>
                             <p><strong>Nội dung:</strong> <?= $row['description'] ?></p>
                             <div class="comments" id="comments-<?= $row['id'] ?>"></div>
                             <form action="#" class="comment-box">
@@ -52,6 +52,10 @@ class ShowPostPage {
             <?php endif; ?>
         <?php endforeach; ?>
     <?php else: ?>
-        <div>Hiện tại chưa có bảng tin nào</div>
+        <div class="d-flex justify-content-center">
+            <div class="jumbotron">
+                <p>Hiện chưa có bảng tin nào từ giáo viên bộ môn, vui lòng quay lại sau.</p>
+            </div>
+        </div>
     <?php endif; ?>
 <?php }}

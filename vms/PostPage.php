@@ -24,6 +24,7 @@ class PostPage {
     // Đổi lại tên __render nếu dùng template cha
     public function __render() {
 ?>
+<a href="/conver" class="back-icon"><i class="fas fa-arrow-left"></i></a>
 <div class="row d-flex justify-content-center mt-4">
     <div class="col-md-8 col-md-offset-2">  
         <h1>Đăng tin</h1>
@@ -46,7 +47,6 @@ class PostPage {
                 </button>
             </div>
         </form>
-        <a href="/conver" class="back-icon"><i class="fas fa-arrow-left"></i></a>
     </div>
 </div>
 <?php }}

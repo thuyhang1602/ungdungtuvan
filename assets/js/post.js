@@ -38,8 +38,8 @@ $(document).ready(function(){
                         +x.content+"</span>"
                         +"<a style='float:right;color:red;' href='/deletecomment/"
                         +x.id+"'>Xóa</a></div>";
+                        $("#comments-"+x.post_id).append(content);
                     }
-                    $(".comments").html(content);
                 }
             }
         });

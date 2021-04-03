@@ -20,6 +20,7 @@ class HomePage {
             if(UserAPI::login($email,$password,$data)->status){
                 header("Location: /conver");
             }else{
+                $_SESSION['error_login'] = "<div class='error-text'>Password/Email không hợp lệ <span class='close'>&times;</span></div>";
                 header("Location: /");
             }
         }
@@ -34,6 +35,7 @@ class HomePage {
       <header>Ứng dụng tư vấn sinh viên <i class="fas fa-comments"></i></header>
       <form action="/" method="POST" enctype="multipart/form-data" autocomplete="off">
         <?= isset($_SESSION['logout']) ? $_SESSION['logout']:"" ?>
+        <?= isset($_SESSION['error_login']) ? $_SESSION['error_login']:"" ?>
         <?php 
             unset($_SESSION['logout']);
         ?>

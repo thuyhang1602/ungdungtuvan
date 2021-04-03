@@ -22,6 +22,7 @@ class InfoPage {
 ?>
     <?php if( count($this->rows->message)> 0): ?>
         <?php foreach($this->rows->message as $row): ?>
+            <a href="/chat/<?= $row['unique_id'] ?>" class="return"><i class="fas fa-arrow-left"></i></a>
             <div class="card">
                 <img src="../images/<?= $row['img'] ?>" style="width:100%">
                 <h1><?= $row['firstname']." ".$row['lastname'] ?></h1>
@@ -31,7 +32,6 @@ class InfoPage {
                 <p><?= ($row['position'] === 'teacher') ? "Bộ môn: ".$row['major']: "Chuyên ngành: ".$row['major'] ?></p>
                 <p class="email">Email: <?= $row['email'] ?></p>
                 <p><button class="sendMailButton" onclick="window.location.href='/mailform/<?= $row['unique_id'] ?>';">Gửi mail</button></p>
-                <a href="/chat/<?= $row['unique_id'] ?>" class="return"><i class="fas fa-arrow-left"></i></a>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>

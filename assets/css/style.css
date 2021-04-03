@@ -121,13 +121,13 @@ body{
 /* Users List CSS Start */
 .users{
   padding: 25px 30px;
+  height:600px;
 }
 .users header,
 .users-list a{
   display: flex;
   align-items: center;
   padding-bottom: 20px;
-  border-bottom: 1px solid #e6e6e6;
   justify-content: space-between;
 }
 .wrapper img{
@@ -377,6 +377,7 @@ header .logout:hover{
 .return{
   color:black;
   font-size: 20px;
+  margin:1rem;
 }
 .sendMailButton,.editButton{
   border: none;
@@ -419,9 +420,6 @@ header .logout:hover{
 #list-user{
   color: black;
 }
-#list-user:nth-child(2){
-  margin: 0 1rem;
-}
 #list-user:hover{
   color:red;
 }
@@ -430,6 +428,16 @@ header .logout:hover{
 }
 .function{
   margin-top:1rem;
+  width:100%;
+  font-size:25px;
+  display:flex;
+}
+.function-item{
+  width: 25%;
+  text-align: center;
+}
+.title-function{
+    font-size: 1rem;
 }
 /* Responive media query */
 @media screen and (max-width: 450px) {
