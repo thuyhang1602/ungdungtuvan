@@ -86,8 +86,8 @@ class UserAPI {
                             $mail->isSMTP();
                             $mail->SMTPDebug  = 1;  
                             $mail->SMTPAuth   = true;
-                            $mail->SMTPSecure = "ssl";
-                            $mail->Port       = 465;
+                            $mail->SMTPSecure = "STARTTLS";
+                            $mail->Port       = 587;
                             $mail->Host       = "smtp.gmail.com";
                             $mail->Username   = "ungdungtuvan@gmail.com";
                             $mail->Password   = "Thuyhang@99";
@@ -100,7 +100,7 @@ class UserAPI {
                                 <body>
                                     <center>
                                         <p>
-                                        <a href="http://localhost/verify/' . $email . '" 
+                                        <a href=https://ungdungtuvan.herokuapp.com/verify/' . $email . '" 
                                         style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
                                         target="_blank">Veirfy email</a>
                                         </p>
