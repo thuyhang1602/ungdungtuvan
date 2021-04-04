@@ -26,7 +26,7 @@ class ResetPasswordPage
                 <body>
                     <center>
                         <p>
-                        <a href="https://ungdungtuvan.herokuapp.com/reset/' . $_POST['email'] . '" 
+                        <a href="https://ungdungtuvan.herokuapp.com/reset/' . $_POST['email'] . ' 
                         style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
                         target="_blank">Reset password</a>
                         </p>
