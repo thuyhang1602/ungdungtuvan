@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Apr 03, 2021 at 02:18 PM
+-- Generation Time: Apr 03, 2021 at 05:38 PM
 -- Server version: 10.4.14-MariaDB
 -- PHP Version: 7.2.34
 
@@ -131,9 +131,9 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`user_id`, `unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`, `auth`, `created_at`, `updated_at`, `school_year`) VALUES
-(29, 1108528159, 'Luân', 'Nguyễn', 'student', 'nguyenhuuluan17@gmail.com', '$2y$10$UbBD3ZD1aqGvDzip0xzGGuvOVOdbepql2awrE6XH3irw1DCuJdsHm', '1617295795luan.jpg', 'Offline now', 'CNTT', 'KHTN', 'male', 'verify', '2021-04-01 12:11:28', '2021-04-03 17:06:16', 3),
-(30, 960922130, 'Quỳnh', 'Liêu', 'student', 'hyquynh123@gmail.com', '$2y$10$FB4DJ7e1WX/lpuF2NJ4.8O2YrHVzcQCZtCChGb9fjo3N.UIc/Vc6K', '1617294544quynh.jpg', 'Active now', 'CNTT', 'KHTN', 'femal', 'verify', '2021-04-01 16:29:04', '2021-04-03 17:57:00', NULL),
-(31, 301642398, 'Hưng', 'Nguyễn', 'student', 'luannh@magenest.com', '$2y$10$vTKn.Pm9IFKYjnmuwYGBi.isC7yOyVzdYpL2weES9Z.1UPV18tyf6', '1617444934hang.jpg', 'Offline now', 'ATTT', 'KHTN', 'male', 'verify', '2021-04-03 10:15:34', '2021-04-03 17:33:38', 4);
+(30, 960922130, 'Quỳnh', 'Liêu', 'student', 'hyquynh123@gmail.com', '$2y$10$FB4DJ7e1WX/lpuF2NJ4.8O2YrHVzcQCZtCChGb9fjo3N.UIc/Vc6K', '1617294544quynh.jpg', 'Offline now', 'CNTT', 'KHTN', 'femal', 'verify', '2021-04-01 16:29:04', '2021-04-03 21:03:11', NULL),
+(31, 301642398, 'Hằng', 'Nguyễn', 'student', 'luannh@magenest.com', '$2y$10$vTKn.Pm9IFKYjnmuwYGBi.isC7yOyVzdYpL2weES9Z.1UPV18tyf6', '1617444934hang.jpg', 'Offline now', 'ATTT', 'KHTN', 'male', 'verify', '2021-04-03 10:15:34', '2021-04-03 21:06:16', 4),
+(32, 838684602, 'Luân', 'Nguyễn', 'teacher', 'nguyenhuuluan17@gmail.com', '$2y$10$emWiDBRFq/K0ME9eblbKlOw/YZ/7FRM1XEPdyb33Q.1B0nqgriNT.', '1617459350luan.jpg', 'Offline now', 'Lập trình web', 'KMA', 'male', 'verify', '2021-04-03 14:15:50', '2021-04-03 21:16:09', 0);
 
 --
 -- Indexes for dumped tables
@@ -202,7 +202,7 @@ ALTER TABLE `score`
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=32;
+  MODIFY `user_id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=33;
 
 --
 -- Constraints for dumped tables

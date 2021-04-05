@@ -94,7 +94,7 @@ class UserAPI {
                             $mail ->CharSet = "UTF-8"; 
                             $mail->isHTML(true);
                             $mail->addAddress($email);
-                            $mail->setFrom("nguyenhuuluan17@gmail.com","Ứng dụng tư vấn sinh viên");
+                            $mail->setFrom("ungdungtuvan@gmail.com","Ứng dụng tư vấn sinh viên");
                             $mail->Subject = "Verify email";
                             $content = '<html>
                                 <body>

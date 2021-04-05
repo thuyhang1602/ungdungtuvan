@@ -20,7 +20,7 @@ class ResetPasswordPage
             $mail ->CharSet = "UTF-8"; 
             $mail->isHTML(true);
             $mail->addAddress($_POST['email']);
-            $mail->setFrom("nguyenhuuluan17@gmail.com","Ứng dụng tư vấn sinh viên");
+            $mail->setFrom("ungdungtuvan@gmail.com","Ứng dụng tư vấn sinh viên");
             $mail->Subject = "Reset password";
             $content = '<html>
                 <body>
