@@ -82,20 +82,12 @@ class UserAPI {
                         );
                         $res = Mysqllib::mysql_post_data_from_query($conn, $insert_query);
                         if($res->status){
-                            //Set SMTP Options
                             $mail = new \mail\PHPMailer();
-                            $mail->SMTPOptions = array(
-                                'ssl' => array(
-                                    'verify_peer' => false,
-                                    'verify_peer_name' => false,
-                                    'allow_self_signed' => true
-                                )
-                            );
                             $mail->isSMTP();
-                            // $mail->SMTPDebug  = 3;  
+                            $mail->SMTPDebug  = 3;  
                             $mail->SMTPAuth   = true;
-                            $mail->SMTPSecure = "SSL";
-                            $mail->Port       = 465;
+                            $mail->SMTPSecure = "STARTTLS";
+                            $mail->Port       = 587;
                             $mail->Host       = "smtp.gmail.com";
                             $mail->Username   = "ungdungtuvan@gmail.com";
                             $mail->Password   = "Thuyhang@99";
