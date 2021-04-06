@@ -86,8 +86,8 @@ class UserAPI {
                             $mail->isSMTP();
                             $mail->SMTPDebug  = 1;  
                             $mail->SMTPAuth   = true;
-                            $mail->SMTPSecure = "STARTTLS";
-                            $mail->Port       = 587;
+                            $mail->SMTPSecure = "SSL";
+                            $mail->Port       = 465;
                             $mail->Host       = "smtp.gmail.com";
                             $mail->Username   = "ungdungtuvan@gmail.com";
                             $mail->Password   = "Thuyhang@99";
