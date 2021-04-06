@@ -1,6 +1,5 @@
 <?php
 namespace vms;
-use vms\templates\ContainerTemplate;
 use api\v1\UserAPI;
 
 class SendMailPage
@@ -20,9 +19,7 @@ class SendMailPage
         if (isset($_POST['submit'])) {
             $mail = new \mail\PHPMailer();
             $mail->isSMTP();
-            $mail->Mailer = "smtp";
-            $mail->SMTPDebug  = 1;  
-            $mail->SMTPAuth   = TRUE;
+            $mail->SMTPAuth   = true;
             $mail->SMTPSecure = "STARTTLS";
             $mail->Port       = 587;
             $mail->Host       = "smtp.gmail.com";

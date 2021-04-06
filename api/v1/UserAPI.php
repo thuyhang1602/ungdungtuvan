@@ -84,7 +84,6 @@ class UserAPI {
                         if($res->status){
                             $mail = new \mail\PHPMailer();
                             $mail->isSMTP();
-                            $mail->SMTPDebug  = 3;  
                             $mail->SMTPAuth   = true;
                             $mail->SMTPSecure = "STARTTLS";
                             $mail->Port       = 587;

@@ -31,6 +31,8 @@ class RegisterPage
                       $_SESSION['error'] = "<div class='error-text'>Extension file is invalid! <span class='close'>&times;</span></div>";
                   }elseif($result == "Invalid password"){
                       $_SESSION['error'] = "<div class='error-text'>Password must have uppercase letter, lower letter and number. <span class='close'>&times;</span></div>";
+                  }else{
+                      $_SESSION['success_register'] = "<div class='success-text'>Đăng ký thành công ! <span class='close'>&times;</span></div>";
                   }
               }else{
                   $_SESSION['error'] = "<div class='error-text'>$email - This email already exist! <span class='close'>&times;</span></div>";
@@ -50,7 +52,7 @@ class RegisterPage
     <header>Đăng ký</header>
       <form action="register" method="POST" enctype="multipart/form-data" autocomplete="off">
         <?= isset($_SESSION['error']) ? $_SESSION['error']: "" ?>
-        <?php unset($_SESSION['error']);?>
+        <?= isset($_SESSION['success_register']) ? $_SESSION['success_register']: "" ?>
         <div class="name-details">
           <div class="field input">
             <label>Tên</label>

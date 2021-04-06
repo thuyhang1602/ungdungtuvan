@@ -16,6 +16,7 @@ class FormResetPage {
     // Đổi lại tên __render nếu dùng template cha
     public function __render() {
 ?>
+<a href="/" class="return"><i class="fas fa-arrow-left"></i></a>
 <section class="form login">
       <header>Lấy lại mật khẩu</header>
       <form action="/resetpassword" method="POST" enctype="multipart/form-data" autocomplete="off">
@@ -26,7 +27,6 @@ class FormResetPage {
           <div class="field button">
             <input type="submit" name="submit" value="Xác thực mail">
           </div>
-          <a href="/" class="return"><i class="fas fa-arrow-left"></i></a>
       </form>
 </section>
 <?php }}

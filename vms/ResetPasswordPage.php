@@ -10,7 +10,6 @@ class ResetPasswordPage
         if (isset($_POST['submit'])) {
             $mail = new \mail\PHPMailer();
             $mail->isSMTP();
-            $mail->SMTPDebug  = 1;  
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = "STARTTLS";
             $mail->Port       = 587;
@@ -35,7 +34,6 @@ class ResetPasswordPage
             </html>';
             $mail->MsgHTML($content);
             $mail->send();
-            header("Location: /");
         }
     }
 }
