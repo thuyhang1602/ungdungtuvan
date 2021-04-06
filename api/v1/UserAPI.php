@@ -83,8 +83,7 @@ class UserAPI {
                         $res = Mysqllib::mysql_post_data_from_query($conn, $insert_query);
                         if($res->status){
                             $mail = new \mail\PHPMailer();
-                            $mail->isSMTP();
-                            $mail->SMTPDebug  = 3;  
+                            $mail->isSMTP(); 
                             $mail->SMTPAuth   = true;
                             $mail->SMTPSecure = "STARTTLS";
                             $mail->Port       = 587;
@@ -109,6 +108,7 @@ class UserAPI {
                             </html>';
                             $mail->MsgHTML($content);
                             $mail->send();
+                            header("Location: /");
                         }
                     }
                 }else{
