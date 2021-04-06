@@ -41,6 +41,7 @@ class PostTemplate {
         </div>
         <script src="/assets/js/post.js"></script>
         <script src="/assets/ckeditor/ckeditor.js"></script>
+        <script>CKEDITOR.replace('description')</script>
     </body>
     </html>
 <?php }}

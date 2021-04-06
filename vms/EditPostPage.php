@@ -34,7 +34,7 @@ class EditPostPage {
                 </div>
                 <div class="form-group">
                     <label for="description">Nội dung <span class="require">*</span></label>
-                    <textarea rows="5" class="form-control" name="description" required><?= $row['description'] ?></textarea>
+                    <textarea rows="5" class="form-control" id="description" name="description" required><?= $row['description'] ?></textarea>
                 </div>
                 <div class="form-group">
                     <button type="submit" name="submit" class="btn btn-primary">
