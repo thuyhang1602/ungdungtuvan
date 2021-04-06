@@ -109,7 +109,6 @@ class UserAPI {
                             </html>';
                             $mail->MsgHTML($content);
                             $mail->send();
-                            header("Location: /");
                         }
                     }
                 }else{
