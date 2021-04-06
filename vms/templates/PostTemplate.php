@@ -40,6 +40,7 @@ class PostTemplate {
             <?php $this->child->__render(); ?>
         </div>
         <script src="/assets/js/post.js"></script>
+        <script src="/assets/ckeditor/ckeditor.js"></script>
     </body>
     </html>
 <?php }}

@@ -84,23 +84,24 @@ class UserAPI {
                         if($res->status){
                             $mail = new \mail\PHPMailer();
                             $mail->isSMTP();
-                            $mail->SMTPDebug  = 1;  
+                            $mail->SMTPDebug = false;
+                            $mail->do_debug = 0;
                             $mail->SMTPAuth   = true;
-                            $mail->SMTPSecure = "ssl";
-                            $mail->Port       = 465;
+                            $mail->SMTPSecure = "STARTTLS";
+                            $mail->Port       = 587;
                             $mail->Host       = "smtp.gmail.com";
                             $mail->Username   = "ungdungtuvan@gmail.com";
                             $mail->Password   = "Thuyhang@99";
                             $mail ->CharSet = "UTF-8"; 
                             $mail->isHTML(true);
                             $mail->addAddress($email);
-                            $mail->setFrom("nguyenhuuluan17@gmail.com","Ứng dụng tư vấn sinh viên");
+                            $mail->setFrom("ungdungtuvan@gmail.com","Ứng dụng tư vấn sinh viên");
                             $mail->Subject = "Verify email";
                             $content = '<html>
                                 <body>
                                     <center>
                                         <p>
-                                        <a href="http://localhost/verify/' . $email . '" 
+                                        <a href=https://ungdungtuvan.herokuapp.com/verify/' . $email . ' 
                                         style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
                                         target="_blank">Veirfy email</a>
                                         </p>
@@ -109,7 +110,6 @@ class UserAPI {
                             </html>';
                             $mail->MsgHTML($content);
                             $mail->send();
-                            header("Location: /");
                         }
                     }
                 }else{

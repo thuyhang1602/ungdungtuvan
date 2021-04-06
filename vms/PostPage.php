@@ -36,7 +36,7 @@ class PostPage {
             </div>
             <div class="form-group">
                 <label for="description">Nội dung <span class="require">*</span></label>
-                <textarea rows="5" class="form-control" name="description" required></textarea>
+                <textarea rows="5" class="form-control" class="ckeditor" name="description" required></textarea>
             </div>
             <div class="form-group">
                 <button type="submit" name="submit" class="btn btn-primary">
