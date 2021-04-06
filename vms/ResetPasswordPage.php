@@ -10,6 +10,8 @@ class ResetPasswordPage
         if (isset($_POST['submit'])) {
             $mail = new \mail\PHPMailer();
             $mail->isSMTP();
+            $mail->SMTPDebug = false;
+            $mail->do_debug = 0;
             $mail->SMTPAuth   = true;
             $mail->SMTPSecure = "STARTTLS";
             $mail->Port       = 587;
