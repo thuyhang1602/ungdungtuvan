@@ -35,10 +35,16 @@ class ChatPage {
                     </div>
                 </header>
                 <div class="chat-box"></div>
-                <form action="#" class="typing-area">
-                    <input type="text" class="incoming_id" name="incoming_id" value="<?= $this->user_id; ?>" hidden>
+                <form action="/insertchat" class="typing-area" method="POST" enctype="multipart/form-data">
+                    <input type="text" class="incoming_id" id="incoming_id" name="incoming_id" value="<?= $this->user_id; ?>" hidden>
                     <input type="text" name="message" class="input-field" placeholder="Type a message here..." autocomplete="off">
-                    <button id="send" type="button"><i class="fab fa-telegram-plane"></i></button>
+                    <div class="image-upload">
+                        <label for="file-input">
+                            <i class="fas fa-upload"></i>
+                        </label>
+                        <input type="file" name="file-input" id="file-input" accept="image/x-png,image/gif,image/jpeg,image/jpg">
+                    </div>
+                    <button id="submit" name="submit" type="submit">Send</button>
                 </form>
             </section>
         <?php endforeach; ?>
