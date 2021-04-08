@@ -1,5 +1,4 @@
 $(document).ready(function(){
-
     $("#search").click(function(){
         var key = $("#key").val();
         var unique_id = $("#unique_id").val();
@@ -20,26 +19,7 @@ $(document).ready(function(){
             $('#key').val("");
       });
     });
-
-    $(".typing-area").submit(function(e){
-        e.preventDefault();
-    });
-
-    $("#send").click(function(){
-        var data = $(".input-field").val();
-        var incoming_id = $(".incoming_id").val();
-        $.ajax({
-            url: "/insertchat",
-            type: 'POST',
-            data: {
-                data:data,
-                incoming_id:incoming_id
-            }
-        }).done(function(){
-            document.querySelector(".typing-area").querySelector(".input-field").value = " "
-        });
-    });
-
+    
     $("#position").on('change',function(){
         if(this.value === 'student'){
             $('label[for="major"]').text('Chuyên ngành');
@@ -87,6 +67,7 @@ $(document).ready(function(){
     $(".chat-box").mouseleave(function(){
         $(this).removeClass("active");
     });
+
 });
 
 var closebtns = document.getElementsByClassName("close");

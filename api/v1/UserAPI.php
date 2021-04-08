@@ -43,7 +43,6 @@ class UserAPI {
         $major = $conn->real_escape_string($user->major);
         $school = $conn->real_escape_string($user->school);
         $sex = $conn->real_escape_string($user->sex);
-        $isVerify = "unverify";
         $school_year =  $conn->real_escape_string($user->school_year);
         $baseUrl = substr(dirname(__FILE__),0,strpos(dirname(__FILE__),'api'));
         if(isset($user->image)){
@@ -65,7 +64,7 @@ class UserAPI {
                         $ran_id = rand(time(), 100000000);
                         $status = "Active now";
                         // Query
-                        $insert_query = sprintf("INSERT INTO `users`(`unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`, `auth`, `school_year`) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
+                        $insert_query = sprintf("INSERT INTO `users`(`unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`,`school_year`) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
                             $ran_id,
                             $firstname,
                             $lastname,
@@ -77,39 +76,14 @@ class UserAPI {
                             $major,
                             $school,
                             $sex,
-                            $isVerify,
                             $school_year
                         );
                         $res = Mysqllib::mysql_post_data_from_query($conn, $insert_query);
                         if($res->status){
-                            $mail = new \mail\PHPMailer();
-                            $mail->isSMTP();
-                            $mail->SMTPDebug = false;
-                            $mail->do_debug = 0;
-                            $mail->SMTPAuth   = true;
-                            $mail->SMTPSecure = "STARTTLS";
-                            $mail->Port       = 587;
-                            $mail->Host       = "smtp.gmail.com";
-                            $mail->Username   = "ungdungtuvan@gmail.com";
-                            $mail->Password   = "Thuyhang@99";
-                            $mail ->CharSet = "UTF-8"; 
-                            $mail->isHTML(true);
-                            $mail->addAddress($email);
-                            $mail->setFrom("ungdungtuvan@gmail.com","Ứng dụng tư vấn sinh viên");
-                            $mail->Subject = "Verify email";
-                            $content = '<html>
-                                <body>
-                                    <center>
-                                        <p>
-                                        <a href=https://ungdungtuvan.herokuapp.com/verify/' . $email . ' 
-                                        style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
-                                        target="_blank">Veirfy email</a>
-                                        </p>
-                                    </center>
-                                </body>
-                            </html>';
-                            $mail->MsgHTML($content);
-                            $mail->send();
+                            $query = sprintf("SELECT unique_id FROM users WHERE unique_id='%s'",$ran_id);
+                            $res = Mysqllib::mysql_get_data_from_query($conn, $query);
+                            $_SESSION['unique_id'] = $res->message[0]['unique_id'];
+                            header("Location: /conver");
                         }
                     }
                 }else{
@@ -119,7 +93,6 @@ class UserAPI {
                 return "Invalid extension";
             }
         }
-        return $res;
     }
 
     public static function login($email,$password,$data){
@@ -129,22 +102,20 @@ class UserAPI {
              return $conn_resp;
          }
          $conn = $conn_resp->message;
-         if($data->message[0]['auth'] === 'verify'){
-            $status = "Active now";
-            $query = sprintf("UPDATE users SET status='%s' WHERE email='%s'",$conn->real_escape_string($status),$conn->real_escape_string($email));
-            $result = Mysqllib::mysql_post_data_from_query($conn,$query);
-            if($result->status){
-                $query = sprintf("SELECT unique_id,password FROM users WHERE email='%s'", $conn->real_escape_string($email));
-                $res = Mysqllib::mysql_get_data_from_query($conn, $query);
-                if(isset($res->message[0]["password"])){
-                    if (password_verify($conn->real_escape_string($password), $res->message[0]["password"])) {
-                        session_start();
-                        $_SESSION['unique_id'] = $res->message[0]['unique_id'];
-                        return new ResponseModel(true);
-                    }
+         $status = "Active now";
+         $query = sprintf("UPDATE users SET status='%s' WHERE email='%s'",$conn->real_escape_string($status),$conn->real_escape_string($email));
+         $result = Mysqllib::mysql_post_data_from_query($conn,$query);
+         if($result->status){
+            $query = sprintf("SELECT unique_id,password FROM users WHERE email='%s'", $conn->real_escape_string($email));
+            $res = Mysqllib::mysql_get_data_from_query($conn, $query);
+            if(isset($res->message[0]["password"])){
+                if (password_verify($conn->real_escape_string($password), $res->message[0]["password"])) {
+                     session_start();
+                    $_SESSION['unique_id'] = $res->message[0]['unique_id'];
+                    return new ResponseModel(true);
                 }
             }
-         }
+        }
          return new ResponseModel(false);
     }
 
@@ -270,13 +241,71 @@ class UserAPI {
             return $conn_resp;
         }
         $conn = $conn_resp->message;
-        $query = sprintf(
-            "INSERT INTO messages(incoming_msg_id, outgoing_msg_id, msg) VALUES ('%s','%s','%s')", 
-            $conn->real_escape_string($incoming_id),
-            $conn->real_escape_string($outgoing_id),
-            $conn->real_escape_string($data)
-        );
-        Mysqllib::mysql_get_data_from_query($conn, $query);
+        $baseUrl = substr(dirname(__FILE__),0,strpos(dirname(__FILE__),'api'));
+        if(!empty($data)){
+            if(!empty($image["name"])){
+                $img_name = $image['name'];
+                $img_type = $image['type'];
+                $tmp_name = $image['tmp_name'];
+                
+                $img_explode = explode('.',$img_name);
+                $img_ext = end($img_explode);
+    
+                $extensions = ["jpeg", "png", "jpg"];
+                if(in_array($img_ext, $extensions) === true){
+                    $types = ["image/jpeg", "image/jpg", "image/png"];
+                    if(in_array($img_type, $types) === true){
+                        $time = time();
+                        $new_img_name = $time.$img_name;
+                        if(move_uploaded_file($tmp_name,str_replace('\\', '/', $baseUrl)."/images/image-message/".$new_img_name)){
+                            // Query
+                            $query = sprintf(
+                                "INSERT INTO messages(incoming_msg_id, outgoing_msg_id, msg, image_message) VALUES ('%s','%s','%s','%s')", 
+                                $conn->real_escape_string($incoming_id),
+                                $conn->real_escape_string($outgoing_id),
+                                $conn->real_escape_string($data),
+                                $new_img_name
+                            );
+                        }
+                    }
+                }
+            }else{
+                $query = sprintf(
+                    "INSERT INTO messages(incoming_msg_id, outgoing_msg_id, msg) VALUES ('%s','%s','%s')", 
+                    $conn->real_escape_string($incoming_id),
+                    $conn->real_escape_string($outgoing_id),
+                    $conn->real_escape_string($data)
+                );
+            }
+            Mysqllib::mysql_post_data_from_query($conn, $query);
+        }else{
+            $img_name = $image['name'];
+            $img_type = $image['type'];
+            $tmp_name = $image['tmp_name'];
+            
+            $img_explode = explode('.',$img_name);
+            $img_ext = end($img_explode);
+
+            $extensions = ["jpeg", "png", "jpg"];
+            if(in_array($img_ext, $extensions) === true){
+                $types = ["image/jpeg", "image/jpg", "image/png"];
+                if(in_array($img_type, $types) === true){
+                    $time = time();
+                    $new_img_name = $time.$img_name;
+                    if(move_uploaded_file($tmp_name,str_replace('\\', '/', $baseUrl)."/images/image-message/".$new_img_name)){
+                        // Query
+                        $query = sprintf(
+                            "INSERT INTO messages(incoming_msg_id, outgoing_msg_id, image_message) VALUES ('%s','%s','%s')", 
+                            $conn->real_escape_string($incoming_id),
+                            $conn->real_escape_string($outgoing_id),
+                            $new_img_name
+                        );
+                        Mysqllib::mysql_post_data_from_query($conn, $query);
+                    }
+                }
+            }
+        }
+        header('Location: /chat/'.$incoming_id);
     }
 
     public static function getChat($outgoing_id,$incoming_id){
@@ -386,22 +415,6 @@ class UserAPI {
         $query = sprintf("UPDATE users SET password='%s' WHERE unique_id='%s'",$password_hash,$id);
         $res = Mysqllib::mysql_get_data_from_query($conn, $query);
         return $res;
-    }
-
-    public static function updateAuthByEmail($email){
-        session_start();
-        // Connect db
-        $conn_resp = Database::connect_db();
-        if(!$conn_resp->status) {
-            return $conn_resp;
-        }
-        $conn = $conn_resp->message;
-        $isVerify = "verify";
-        $query = sprintf("UPDATE users SET auth='%s' WHERE email='%s'",$isVerify,$email);
-        Mysqllib::mysql_get_data_from_query($conn, $query);
-        $data = UserAPI::getUserByEmail($email);
-        $_SESSION['unique_id'] = $data->message[0]['unique_id'];
-        header("Location: /conver");
     }
 
     public static function savePost($userId,$title,$description){

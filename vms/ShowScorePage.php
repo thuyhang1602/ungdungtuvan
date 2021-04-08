@@ -19,13 +19,17 @@ class ShowScorePage {
         $this->subject_2 = UserAPI::getSubject2($params[0]);
         $this->total1 = 0;
         $this->total2 = 0;
-        foreach($this->subject_1->message as $row){
-            $this->total1 += $row['medium_score'];
+        if(!empty($this->subject_1->message)&&!empty($this->subject_2->message)){
+            foreach($this->subject_1->message as $row){
+                $this->total1 += $row['medium_score'];
+            }
+            foreach($this->subject_2->message as $row){
+                $this->total2 += $row['medium_score'];
+            }
+            $this->total = ($this->total1/count($this->subject_1->message) + $this->total2/count($this->subject_2->message))/2;
+        }else{
+            $this->total = "";
         }
-        foreach($this->subject_2->message as $row){
-            $this->total2 += $row['medium_score'];
-        }
-        $this->total = ($this->total1/count($this->subject_1->message) + $this->total2/count($this->subject_2->message))/2;
     }
 
     // Khai báo template và truyền bản thân vào template cha
@@ -77,32 +81,40 @@ class ShowScorePage {
             </tr>
             <tr>
                 <th>TBC tích lũy (10)</th>
-                <td><?= round($this->total,2) ?></td>
-                <?php $result = round($this->total,2) ?>
+                <?php if(!empty($this->subject_1->message)&&!empty($this->subject_2->message)): ?>
+                    <td><?= round($this->total,2) ?></td>
+                    <?php $result = round($this->total,2) ?>
+                <?php else: ?>
+                    <td>Chưa được cập nhật</td>
+                <?php endif; ?>
             </tr>
             <tr>
                 <th>TBC tích lũy (4)</th>
-                <td>
-                    <?php 
-                        if($result >=4 && $result < 5){
-                            echo "1.0";
-                        }elseif($result >= 5 && $result < 5.5){
-                            echo "1.5";
-                        }elseif($result >= 5.5 && $result < 6.5){
-                            echo "2.0";
-                        }elseif($result >= 6.5 && $result < 7){
-                            echo "2.5";
-                        }elseif($result >= 7 && $result < 8){
-                            echo "3.0";
-                        }elseif($result >= 8 && $result < 8.5){
-                            echo "3.5";
-                        }elseif($result >= 8.5 && $result < 9){
-                            echo "1.5";
-                        }else{
-                            echo "4.0";
-                        }
-                    ?>
-                </td>
+                <?php if(!empty($this->subject_1->message)&&!empty($this->subject_2->message)): ?>
+                    <td>
+                        <?php 
+                            if($result >=4 && $result < 5){
+                                echo "1.0";
+                            }elseif($result >= 5 && $result < 5.5){
+                                echo "1.5";
+                            }elseif($result >= 5.5 && $result < 6.5){
+                                echo "2.0";
+                            }elseif($result >= 6.5 && $result < 7){
+                                echo "2.5";
+                            }elseif($result >= 7 && $result < 8){
+                                echo "3.0";
+                            }elseif($result >= 8 && $result < 8.5){
+                                echo "3.5";
+                            }elseif($result >= 8.5 && $result < 9){
+                                echo "1.5";
+                            }else{
+                                echo "4.0";
+                            }
+                        ?>
+                    </td>
+                <?php else: ?>
+                    <td>Chưa được cập nhật</td>
+                <?php endif; ?>
             </tr>
         </table>
     </div>
@@ -114,30 +126,35 @@ class ShowScorePage {
 
         <div id="HK1" class="tabcontent">
             <h3>HK 1 (2020-2021)</h3>
-            <table class="table table-borderless">
-                <tr>
-                    <th>Mã môn</th>
-                    <th>Môn học</th>
-                    <th>Số tín chỉ</th>
-                    <th>Điểm trung bình</th>
-                </tr>
-                <?php foreach($this->subject_1->message as $row): ?>
+            <?php if(!empty($this->subject_1->message)&&!empty($this->subject_2->message)): ?>
+                <table class="table table-borderless">
                     <tr>
-                        <td><?= $row['subject_id'] ?></td>
-                        <td><?= $row['subject_name'] ?></td>
-                        <td><?= $row['credits'] ?></td>
-                        <td><?= $row['medium_score'] ?></td>
+                        <th>Mã môn</th>
+                        <th>Môn học</th>
+                        <th>Số tín chỉ</th>
+                        <th>Điểm trung bình</th>
                     </tr>
-                <?php endforeach; ?>
-                <tr>
-                    <th>Trung bình</th>
-                    <td><?= round(($this->total1)/count($this->subject_1->message ),2) ?></td>
-                </tr>
-            </table>
+                        <?php foreach($this->subject_1->message as $row): ?>
+                            <tr>
+                                <td><?= $row['subject_id'] ?></td>
+                                <td><?= $row['subject_name'] ?></td>
+                                <td><?= $row['credits'] ?></td>
+                                <td><?= $row['medium_score'] ?></td>
+                            </tr>
+                        <?php endforeach; ?>
+                    <tr>
+                        <th>Trung bình</th>
+                        <td><?= round(($this->total1)/count($this->subject_1->message ),2) ?></td>
+                    </tr>
+                </table>
+            <?php else: ?>
+                    <div>Hiện tại điểm chưa được cập nhập. Vui lòng quay lại sau.</div>
+            <?php endif; ?>
         </div>
-
+        
         <div id="HK2" class="tabcontent">
             <h3>HK 2 (2020-2021)</h3>
+            <?php if(!empty($this->subject_1->message)&&!empty($this->subject_2->message)): ?>
             <table class="table table-borderless">
                 <tr>
                     <th>Mã môn</th>
@@ -159,6 +176,9 @@ class ShowScorePage {
                     
                 </tr>
             </table>
+            <?php else: ?>
+                    <div>Hiện tại điểm chưa được cập nhập. Vui lòng quay lại sau.</div>
+            <?php endif; ?>
         </div>
     </div>
   </div>

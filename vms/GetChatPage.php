@@ -22,9 +22,44 @@ class GetChatPage
        if(count($this->rows->message) > 0){
             foreach($this->rows->message as $row){   
                 if($row['outgoing_msg_id'] === $_SESSION['unique_id']){
-                    $output .= '<div class="chat outgoing"><div class="details"><p>'. $row['msg'] .'</p></div></div>';
+                    if(!empty($row['msg'])){
+                        if(!empty($row['image_message'])){
+                            $output .= '<div class="chat outgoing">
+                            <div class="details">
+                                <p>'. $row['msg'] .'</p></div>
+                                <a target="_blank" href="/images/image-message/'.$row['image_message'].'"><img class="image-outgoing" src="/images/image-message/'.$row['image_message'].'" width="100px" height="100px"/></a></div>';
+                        }else{
+                            $output .= '<div class="chat outgoing">
+                            <div class="details">
+                                <p>'. $row['msg'] .'</p></div></div>';
+                        }
+                    }else{
+                        if(!empty($row['image_message'])){
+                            $output .= '<div class="chat outgoing">
+                            <a target="_blank" href="/images/image-message/'.$row['image_message'].'"><img class="image-outgoing" src="/images/image-message/'.$row['image_message'].'" width="100px" height="100px"/></a>';
+                        }
+                    }
                 }else{
-                    $output .= '<div class="chat incoming"><img src="../images/'.$row['img'].'" alt=""><div class="details"><p>'. $row['msg'] .'</p></div></div>';
+                    if(!empty($row['msg'])){
+                        if(!empty($row['image_message'])){
+                            $output .= '<div class="chat incoming">
+                            <img src="../images/'.$row['img'].'" alt="">
+                            <div class="details">
+                                <p>'. $row['msg'] .'</p></div></div>
+                                <a target="_blank" href="/images/image-message/'.$row['image_message'].'"><img src = "/images/image-message/'.$row['image_message'].'" width="100px" height="100px"/></a>';
+                        }else{
+                            $output .= '<div class="chat incoming">
+                            <img src="../images/'.$row['img'].'" alt="">
+                            <div class="details">
+                                <p>'. $row['msg'] .'</p></div></div>';
+                        }
+                    }else{
+                        if(!empty($row['image_message'])){
+                            $output .= '<div class="chat incoming">
+                            <img src="../images/'.$row['img'].'" alt=""></div>
+                            <a target="_blank" href="/images/image-message/'.$row['image_message'].'"><img class="image-incoming" src = "/images/image-message/'.$row['image_message'].'" width="100px" height="100px"/></a>';
+                        }
+                    }
                 }
             }
             echo $output;
