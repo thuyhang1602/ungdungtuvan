@@ -49,7 +49,6 @@ class RegisterPage
 <section class="form signup">
     <header>Đăng ký</header>
       <form action="register" method="POST" enctype="multipart/form-data" autocomplete="off">
-        <?= isset($_SESSION['error']) ? $_SESSION['error']: "" ?>
         <div class="name-details">
           <div class="field input">
             <label>Tên</label>
