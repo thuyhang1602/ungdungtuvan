@@ -43,6 +43,7 @@ class UserAPI {
         $major = $conn->real_escape_string($user->major);
         $school = $conn->real_escape_string($user->school);
         $sex = $conn->real_escape_string($user->sex);
+        $isVerify = "unverify";
         $school_year =  $conn->real_escape_string($user->school_year);
         $baseUrl = substr(dirname(__FILE__),0,strpos(dirname(__FILE__),'api'));
         if(isset($user->image)){
@@ -64,7 +65,7 @@ class UserAPI {
                         $ran_id = rand(time(), 100000000);
                         $status = "Active now";
                         // Query
-                        $insert_query = sprintf("INSERT INTO `users`(`unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`,`school_year`) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
+                        $insert_query = sprintf("INSERT INTO `users`(`unique_id`, `firstname`, `lastname`, `position`, `email`, `password`, `img`, `status`, `major`, `school`, `sex`, `auth`, `school_year`) VALUES ( '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s', '%s')", 
                             $ran_id,
                             $firstname,
                             $lastname,
@@ -76,14 +77,39 @@ class UserAPI {
                             $major,
                             $school,
                             $sex,
+                            $isVerify,
                             $school_year
                         );
                         $res = Mysqllib::mysql_post_data_from_query($conn, $insert_query);
                         if($res->status){
-                            $query = sprintf("SELECT unique_id FROM users WHERE unique_id='%s'",$ran_id);
-                            $res = Mysqllib::mysql_get_data_from_query($conn, $query);
-                            $_SESSION['unique_id'] = $res->message[0]['unique_id'];
-                            header("Location: /conver");
+                            $mail = new \mail\PHPMailer();
+                            $mail->isSMTP();
+                            // $mail->SMTPDebug  = 1;  
+                            $mail->SMTPAuth   = true;
+                            $mail->SMTPSecure = "STARTTLS";
+                            $mail->Port       = 587;
+                            $mail->Host       = "smtp.gmail.com";
+                            $mail->Username   = "ungdungtuvan@gmail.com";
+                            $mail->Password   = "Thuyhang@99";
+                            $mail ->CharSet = "UTF-8"; 
+                            $mail->isHTML(true);
+                            $mail->addAddress($email);
+                            $mail->setFrom("ungdungtuvan@gmail.com","Ứng dụng tư vấn sinh viên");
+                            $mail->Subject = "Verify email";
+                            $content = '<html>
+                                <body>
+                                    <center>
+                                        <p>
+                                        <a href="http://localhost/verify/' . $email . '" 
+                                        style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
+                                        target="_blank">Veirfy email</a>
+                                        </p>
+                                    </center>
+                                </body>
+                            </html>';
+                            $mail->MsgHTML($content);
+                            $mail->send();
+                            header("Location: /");
                         }
                     }
                 }else{
@@ -93,6 +119,7 @@ class UserAPI {
                 return "Invalid extension";
             }
         }
+        return $res;
     }
 
     public static function login($email,$password,$data){
@@ -554,5 +581,21 @@ class UserAPI {
         $query = sprintf("SELECT * FROM score WHERE `user_id` = '%s' AND `semester` = 'HK2'",$conn->real_escape_string($id));
         $res = Mysqllib::mysql_get_data_from_query($conn, $query);
         return $res;
+    }
+
+    public static function updateAuthByEmail($email){
+        session_start();
+        // Connect db
+        $conn_resp = Database::connect_db();
+        if(!$conn_resp->status) {
+            return $conn_resp;
+        }
+        $conn = $conn_resp->message;
+        $isVerify = "verify";
+        $query = sprintf("UPDATE users SET auth='%s' WHERE email='%s'",$isVerify,$email);
+        Mysqllib::mysql_get_data_from_query($conn, $query);
+        $data = UserAPI::getUserByEmail($email);
+        $_SESSION['unique_id'] = $data->message[0]['unique_id'];
+        header("Location: /conver");
     }
 }
