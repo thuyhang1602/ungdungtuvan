@@ -57,11 +57,11 @@ class EditPage
           <label>Giới tính</label>
           <select name="sex" id="sex" required>
             <?php if ($row['sex'] == 'male'): ?>
-                <option value="male" checked>Nam</option>
+                <option value="male" selected>Nam</option>
                 <option value="female">Nữ</option>
             <?php else: ?>
                 <option value="male">Nam</option>
-                <option value="female" checked>Nữ</option>
+                <option value="female" selected>Nữ</option>
             <?php endif; ?>
           </select>
         </div> 
