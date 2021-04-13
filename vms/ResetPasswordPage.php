@@ -35,6 +35,7 @@ class ResetPasswordPage
             </html>';
             $mail->MsgHTML($content);
             $mail->send();
+            header("Location: /");
         }
     }
 }

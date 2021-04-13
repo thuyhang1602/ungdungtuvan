@@ -100,7 +100,7 @@ class UserAPI {
                                 <body>
                                     <center>
                                         <p>
-                                        <a href="http://localhost/verify/' . $email . '" 
+                                        <a href="http://localhost:8080/verify/' . $email . '" 
                                         style="background-color:#ffbe00; color:#000000; display:inline-block; padding:12px 40px 12px 40px; text-align:center; text-decoration:none;" 
                                         target="_blank">Veirfy email</a>
                                         </p>
@@ -467,7 +467,7 @@ class UserAPI {
             return $conn_resp;
         }
         $conn = $conn_resp->message;
-        $select_query = sprintf("SELECT * FROM `posts` INNER JOIN users ON posts.unique_id = users.unique_id");
+        $select_query = sprintf("SELECT p.*,u.position,u.firstname,u.lastname,u.unique_id FROM posts p INNER JOIN users u ON p.unique_id = u.unique_id");
         $res = Mysqllib::mysql_get_data_from_query($conn, $select_query);
         return $res;
     }

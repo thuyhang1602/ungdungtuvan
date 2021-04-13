@@ -6,11 +6,17 @@ use api\v1\UserAPI;
 class UsersPage {
     public $rows;
     public $data;
+    public $position;
     public function __construct($params = null) {
-        $this->title = "Danh sách giáo viên";
+        if($params[0] === 'student'){
+            $this->title = "Danh sách sinh viên";
+        }else{
+            $this->title = "Danh sách giáo viên";
+        }
         session_start();
         $this->rows = UserAPI::getUserByPosition($_SESSION['unique_id'],$params[0]);
         $this->data = UserAPI::getOutput($_SESSION['unique_id'],$this->rows->message);
+        $this->position = $params[0];
     }
 
     // Khai báo template và truyền bản thân vào template cha
@@ -30,7 +36,11 @@ class UsersPage {
                     if (count($this->rows->message) > 0) {
                         echo $this->data;
                     }else{
-                        echo "Không có giáo viên";
+                        if($this->position === 'student'){
+                            echo "Không có sinh viên";
+                        }else{
+                            echo "Không có giáo viên";
+                        }
                     }
                 }
             ?>
