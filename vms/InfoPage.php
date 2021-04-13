@@ -31,7 +31,10 @@ class InfoPage {
                 <p class="title">Vị trí: <?= ($row['position'] === 'teacher') ? "giáo viên":"sinh viên" ?></p>
                 <p><?= ($row['position'] === 'teacher') ? "Bộ môn: ".$row['major']: "Chuyên ngành: ".$row['major'] ?></p>
                 <p class="email">Email: <?= $row['email'] ?></p>
-                <p><button class="sendMailButton" onclick="window.location.href='/mailform/<?= $row['unique_id'] ?>';">Gửi mail</button></p>
+                <div class="buttons">
+                    <p><button class="sendMailButton"  onclick="window.location.href='/mailform/<?= $row['unique_id'] ?>';">Gửi mail</button></p>
+                    <p><button class="showScoreButton" onclick="window.location.href='/showscore/<?= $row['unique_id'] ?>';">Tra cứu điểm</button></p>
+                </div>
             </div>
         <?php endforeach; ?>
     <?php endif; ?>

@@ -338,7 +338,7 @@ body{
   justify-content: space-between;
   position: relative;
 }
-.typing-area input{
+.typing-area input[type="text"]{
   height: 45px;
   width: calc(100% - 58px);
   font-size: 16px;
@@ -346,6 +346,10 @@ body{
   border: 1px solid #e6e6e6;
   outline: none;
   border-radius: 5px 0 0 5px;
+  margin-top:1rem;
+}
+.typing-area input[type="file"]{
+  outline: none;
 }
 .typing-area button{
   color: #fff;
@@ -358,6 +362,7 @@ body{
   opacity: 0.7;
   border-radius: 0 5px 5px 0;
   transition: all 0.3s ease;
+  margin-top:1rem;
 }
 .typing-area button:hover{
   background-color: black;
@@ -434,13 +439,10 @@ header .logout:hover{
 }
 .image-upload{
   position: absolute;
-  left:1%;
-  top:30%;
+  left:7%;
+  top:5%;
 }
-.image-upload > input {
-  display: none !important;
-}
-.sendMailButton,.editButton{
+.sendMailButton,.editButton,.showScoreButton{
   border: none;
   outline: 0;
   display: inline-block;
@@ -452,6 +454,11 @@ header .logout:hover{
   width: 100%;
   font-size: 18px;
   margin:1rem 0;
+}
+.buttons{
+  display:flex;
+  justify-content: space-around;
+  align-items: center;
 }
 /* Responive media query */
 @media screen and (max-width: 450px) {
